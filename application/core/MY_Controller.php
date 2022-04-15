@@ -16,48 +16,29 @@ class MY_Controller extends CI_Controller{
     {
         parent::__construct();
     }
-    
-    public function user_page($page = NULL, $data = NULL)
+
+    public function login_page()
     {
-        $data["cur_date"] = $this->get_current_date("lain");
-        $data["hosp_name"] = $this->user_model->get_hospital();
-        $this->load->view('templates/header',$data);
-        
-        if ($page === NULL) {
-            if ($this->has_log_in()) {
-                redirect('user/appointments','refresh');
-            }else{
-                $this->load->view('pages/login',$data);
-            }
-        }else{
-            if ($page === 'lockscreen') {
-                $this->load->view('pages/'.$page,$data);
-            }else{
-                $this->load->view('templates/navbar',$data);
-                $this->load->view('templates/sidebar',$data);
-    //            $this->load->view('templates/right_sidebar',$data);
-                $this->load->view('pages/'.$page,$data);
-            }
-        }
-        $this->load->view('templates/footer',$data);
-    }
-    
-    public function guest_page($page = NULL, $data = NULL)
-    {
-        $this->load->view('templates/header',$data);
-        
-        if ($page === NULL) {
-            if ($this->has_log_in()) {
-                redirect('user/dashboard','refresh');
-            }else{
-                $this->load->view('pages/login',$data);
-            }
-        }else{
-            $this->load->view('templates/navbar',$data);
-            $this->load->view('templates/sidebar',$data);
-            $this->load->view('pages/'.$page,$data);
-        }
-        $this->load->view('templates/footer',$data);
+        $data["page_title"] = "Sign in";
+        $data["css"] = array(
+            'assets/vendors/plugins/bootstrap/css/bootstrap.css',
+            'assets/vendors/plugins/node-waves/waves.css',
+            'assets/vendors/plugins/animate-css/animate.css',
+            'assets/vendors/plugins/sweetalert/sweetalert.css',
+            'assets/vendors/css/style.css',
+            'assets/vendors/css/themes/all-themes.css',
+            'assets/css/myStyle.css');
+
+        $data["js"] = array(
+            'assets/vendors/plugins/jquery/jquery.min.js',
+            'assets/vendors/plugins/bootstrap/js/bootstrap.js',
+            'assets/vendors/plugins/node-waves/waves.js',
+            'assets/vendors/plugins/jquery-validation/jquery.validate.js',
+            'assets/vendors/js/admin.js',
+            'assets/vendors/js/pages/examples/sign-in.js',
+            'assets/vendors/plugins/sweetalert/sweetalert.min.js',
+            'assets/js/user.js');
+        $this->admin_page(NULL, $data);
     }
     
     public function admin_page($page = NULL, $data = NULL)
@@ -66,7 +47,7 @@ class MY_Controller extends CI_Controller{
         
         if ($page === NULL) {
             if ($this->has_log_in()) {
-                redirect('admin/appointments','refresh');
+                redirect('admin/program','refresh');
             }else{
                 $this->load->view('admin/pages/login',$data);
             }
@@ -105,8 +86,9 @@ class MY_Controller extends CI_Controller{
     public function set_session_data($data)
     {
         $newdata = array(
-                    'username'       => $data['username'],
-                    'logged_in'    => TRUE
+                    'username'      => $data['username'],
+                    'logged_in'     => TRUE,
+                    'user_data'     => $data
             );
 
             $this->session->set_userdata($newdata);

@@ -16,13 +16,33 @@
             <!--<a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>-->
             <a href="javascript:void(0);" class="bars"></a>
             <a class="navbar-brand " href="<?= base_url('admin/appointments') ?>">
-                Ricamora Dental Clinic
+                JRMSU Extension Program
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                
-            </ul>
-        </div>
+        <ul class="nav navbar-nav navbar-right" style="margin-right: 0px">
+            <li>
+                <a href="#"> <label><?= $this->session->userdata('user_data')['first_name'] ?> <?= $this->session->userdata('user_data')['last_name'] ?></label></a>
+            </li>
+            <li>
+                <a href="#"> <span style="font-size: 25px;">|</span></a>
+            </li>
+            </li>
+            <li>
+                <a href="<?= base_url('user/sign_out') ?>" > Sign Out</a>
+            </li> 
+            <!-- <div class="btn-group user-helper-dropdown"> -->
+                <!-- <div class="row" style="margin-top: 25px; margin-right: 10px">
+                    <div class="col-md-10">
+                        <label>This is Name</label>
+                    </div>
+                    <div class="col-md-2" style="height: 100%;">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">expand_more</i>
+                        <ul class="dropdown-menu pull-left">
+                            <li><a href="<?= base_url('user/sign_out') ?>"><i class="material-icons">input</i>Sign Out</a></li>
+                        </ul> 
+                    </div>
+                </div> -->
+            <!-- </div> -->
+        </ul>
     </div>
 </nav>

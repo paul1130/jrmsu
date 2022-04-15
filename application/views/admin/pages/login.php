@@ -33,7 +33,7 @@
                             <!--<a href="forgot-password.html">Forgot Password?</a>-->
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" type="button" onclick="dental.validate_log_in()">SIGN IN</button>
+                            <button class="btn btn-block bg-pink waves-effect" type="button" onclick="user.validate_log_in()">SIGN IN</button>
                         </div>
                     </div>
                 </form>

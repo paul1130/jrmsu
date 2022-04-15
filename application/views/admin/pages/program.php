@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <ol class="breadcrumb breadcrumb-col-cyan">
-                    <li><a href="javascript:void(0);">Medicines</a></li>
+                    <li><a href="javascript:void(0);">Extension Programs</a></li>
                 </ol>
             </div>
             
@@ -12,11 +12,11 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                               Medicines Table
+                               Programs Table
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                                <button type="button" data-toggle="modal" href="#addMedicine" class="btn bg-blue waves-effect">Add Medicine</button>
+                                <button type="button" data-toggle="modal" href="#addProgram" class="btn bg-blue waves-effect">Add Program</button>
                             <table id="medicines-table" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr style="font-size: 12px">
@@ -36,7 +36,7 @@
         </div>
     </section>
 </body>
-<?php $this->load->view('admin/modals/addMedicine'); ?>
+<?php $this->load->view('admin/modals/addProgram'); ?>
 <?php $this->load->view('admin/modals/updateMedicine'); ?>
 
 <script type="text/javascript">
@@ -44,6 +44,6 @@
         
     medicines.fetch_medicines();
     
-    var sidemenu = $('#menu-medicines').removeClass().addClass('active');
+    var sidemenu = $('#menu-programs').removeClass().addClass('active');
 });
 </script>

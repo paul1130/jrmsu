@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <ol class="breadcrumb breadcrumb-col-cyan">
-                    <li><a href="javascript:void(0);">Services</a></li>
+                    <li><a href="javascript:void(0);">Extension Programs</a></li>
                 </ol>
             </div>
             
@@ -12,16 +12,16 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                               Services Table
+                               Programs Table
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                                <button type="button" data-toggle="modal" href="#addService" class="btn bg-blue waves-effect">Add Service</button>
-                            <table id="services-table" class="table table-bordered table-striped table-hover">
+                                <button type="button" data-toggle="modal" href="#addMedicine" class="btn bg-blue waves-effect">Add Medicine</button>
+                            <table id="medicines-table" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr style="font-size: 12px">
-                                        <th>Service Code</th>
-                                        <th>Service</th>
+                                        <th>Medicine Code</th>
+                                        <th>Description</th>
                                         <th>Price</th>
                                         <th>Action</th>
                                     </tr>
@@ -36,14 +36,14 @@
         </div>
     </section>
 </body>
-<?php $this->load->view('admin/modals/addService'); ?>
-<?php $this->load->view('admin/modals/updateService'); ?>
+<?php $this->load->view('admin/modals/addMedicine'); ?>
+<?php $this->load->view('admin/modals/updateMedicine'); ?>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         
-    services.fetch_services();
+    medicines.fetch_medicines();
     
-    var sidemenu = $('#menu-services').removeClass().addClass('active');
+    var sidemenu = $('#menu-programs').removeClass().addClass('active');
 });
 </script>
