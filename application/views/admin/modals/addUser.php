@@ -40,9 +40,9 @@
                                 <div class="form-line">
                                     <select class="form-select form-control" id="sel1" name="type">
                                         <option value='none' style='display: none'>User Type</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="dean">Dean</option>
-                                        <option value="secretary">Secretary</option>
+                                        <?php foreach (user_type as $key => $value) {  echo $value; ?>
+                                            <option value="<?=$key?>"><?=$value?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <small style="color:red"></small>

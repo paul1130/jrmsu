@@ -14,7 +14,7 @@
 class Program extends MY_Controller{
     public function __construct() {
         parent::__construct();
-        $this->load->model('user_model');
+        $this->load->model('program_model');
     }
     
     public function index()
@@ -56,7 +56,7 @@ class Program extends MY_Controller{
                 'assets/vendors/js/checkbox.js',
                 'assets/vendors/js/pages/forms/advanced-form-elements.js',
                 'assets/vendors/js/demo.js',
-                'assets/js/medicines.js');
+                'assets/js/program.js');
             
             $this->admin_page('program', $data);
         }else{
@@ -64,96 +64,144 @@ class Program extends MY_Controller{
         }
     }
     
-    public function fetch_medicines()
+    public function fetch_programs()
     {
         $result = array('status' => false);
-        $result['medicines']= $this->dent_model->get_medicines(); 
-        $result['status'] = true;
+        $result["programs"]= $this->program_model->get_programs(); 
+        $result["status"] = true;
         
         echo json_encode($result);
     }
-    
-    public function add_medicine()
+
+    public function add_program()
     {
         $result = array('status' => false);
+        $this->form_validation->set_rules('title','Title','trim|required|alpha_numeric');
+        $this->form_validation->set_rules('date','Program Date','trim|required');
+        $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required|alpha_numeric');
+        $this->form_validation->set_rules('remarks','Remarks','trim|required|alpha_numeric');
+        $this->form_validation->set_rules('moa_status', 'Moa Status', 'required|alpha_numeric');
+        $this->form_validation->set_rules('beneficiary','Number of Beneficiary','trim|required|integer');
+        $this->form_validation->set_rules('trained', 'No. Of Persons Trained', 'trim|required|integer');
+        $this->form_validation->set_rules('conducted', 'Place conducted', 'trim|required');
+        $this->form_validation->set_rules('started', 'Started', 'trim|required');
+        $this->form_validation->set_rules('ended', 'Ended', 'trim|required');
+        $this->form_validation->set_rules('numerical_rating', 'Numerical rating', 'trim|required|numeric');
+        $this->form_validation->set_rules('descriptive_rating', 'Descriptive rating', 'trim|required|alpha_numeric');
         
-        $desc = $this->input->post("description");
-        $price = $this->input->post("price");
-        $error = 0;
-        
-        if (empty($desc)) {
-           $error++;
-           $result["error_desc"] = "Please enter medicine description.";
+        if ($this->form_validation->run() === FALSE){
+            $result['error_title'] = form_error('title');
+            $result['error_date'] = form_error('date');
+            $result['error_partner'] = form_error('partner');
+            $result['error_beneficiary'] = form_error('beneficiary');
+            $result['error_remarks'] = form_error('remarks');
+            $result['error_moa_status'] = form_error('moa_status');
+            $result['error_trained'] = form_error('trained');
+            $result['error_conducted'] = form_error('conducted');
+            $result['error_started'] = form_error('started');
+            $result['error_ended'] = form_error('ended');
+            $result['error_numerical_rating'] = form_error('numerical_rating');
+            $result['error_descriptive_rating'] = form_error('descriptive_rating');
         }else{
-            if ($this->dent_model->check_medicine($desc)) {
-                $error++;
-                $result["error_exist"] = "This medicine already exist.";
-            }
-        }
-        
-        if (empty($price) || !is_numeric($price)) {
-            $error++;
-            $result["error_price"] = "Price invalid.";
-        }
-        
-        
-        
-        if ($error === 0) {
-            if ($this->dent_model->insert_medicine()) {
-                $result['medicines']= $this->dent_model->get_medicines(); 
+            $started_date = date_create_from_format('Y-m-d - H:i', $this->input->post("started"));
+            $ended_date = date_create_from_format('Y-m-d - H:i', $this->input->post("started"));
+            $data = array(
+                'title' => $this->input->post("title"),
+                'date' => $this->input->post("date"),
+                'partner' => $this->input->post("partner"),
+                'beneficiary' => $this->input->post("beneficiary"),
+                'remarks' => $this->input->post("remarks"),
+                'moa_status' => $this->input->post("moa_status"),
+                'trained' => $this->input->post("trained"),
+                'conducted' => $this->input->post("conducted"),
+                'started' => date_format($started_date, 'Y-m-d H:i:s'),
+                'ended' =>  date_format($ended_date, 'Y-m-d H:i:s'),
+                'numerical_rating' => $this->input->post("numerical_rating"),
+                'descriptive_rating' => $this->input->post("descriptive_rating"),
+                'created_date' => $this->program_model->get_current_date(),
+                'created_by' =>  $this->session->userdata('user_data')['id'] 
+            );
+
+            $record_id = $this->program_model->insert_program($data);
+            if ($record_id) {
                 $result['status'] = true;
+                $result['id'] = $record_id;
             }
         }
-        
         echo json_encode($result);
     }
+
+    public function upload_file() { 
+   
+        $data = [];
+        $result = array('status' => false, 'error' => []);
+     
+        $count = count($_FILES['files']['name']);
+      
+        for($i=0;$i<$count;$i++){
+      
+          if(!empty($_FILES['files']['name'][$i])){
+      
+            $_FILES['file']['name'] = $_FILES['files']['name'][$i];
+            $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+            $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+            $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+            $_FILES['file']['size'] = $_FILES['files']['size'][$i];
     
-    public function remove_medicine()
-    {
-        $result = array('status' => false);
-        $code = $this->input->post("code");
-        if ($this->dent_model->delete_medicine($code)) {
-            $result['medicines']= $this->dent_model->get_medicines(); 
-            $result['status'] = true;
-        }
+            $config['upload_path'] = 'uploads/'; 
+            $config['allowed_types'] = 'jpg|jpeg|png|pdf';
+            $config['max_size'] = '5000';
+            $config['file_name'] = $_FILES['files']['name'][$i];
+            $config['encrypt_name'] = TRUE;
+     
+            $this->load->library('upload',$config); 
+      
+            if($this->upload->do_upload('file')){
+                $uploadData = $this->upload->data();
+                $filename = $uploadData['file_name'];
         
-        echo json_encode($result);
-    }
-    
-    public function updt_medicine()
-    {
-        $result = array('status' => false);
-        
-        $desc = $this->input->post("description");
-        $price = $this->input->post("price");
-        $code = $this->input->post("mcode");
-        $error = 0;
-        
-        if (empty($desc)) {
-           $error++;
-           $result["error_desc"] = "Please enter medicine description.";
-        }else{
-            if ($this->dent_model->check_medicine_up($desc,$code)) {
-                $error++;
-                $result["error_exist"] = "This medicine already exist.";
+                $data['totalFiles'][] = $filename;
+            } else {
+                $result['error'] = array('error' => $this->upload->display_errors());
             }
+          }
+     
         }
-        
-        if (empty($price) || !is_numeric($price)) {
-            $error++;
-            $result["error_price"] = "Price invalid.";
-        }
-        
-        
-        
-        if ($error === 0) {
-            if ($this->dent_model->modify_medicine($code)) {
-                $result['medicines']= $this->dent_model->get_medicines(); 
-                $result['status'] = true;
-            }
-        }
-        
+     
         echo json_encode($result);
+     }
+
+    public function new_program()
+    {
+        $data["page_title"] = "Add Program";
+        $data["css"] = array(
+            'assets/vendors/plugins/bootstrap/css/bootstrap.css',
+            'assets/vendors/plugins/node-waves/waves.css',
+            'assets/vendors/plugins/animate-css/animate.css',
+            'assets/vendors/plugins/bootstrap-select/css/bootstrap-select.css',
+            'assets/vendors/plugins/sweetalert/sweetalert.css',
+            'assets/vendors/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+            'assets/vendors/css/style.css',
+            'assets/vendors/css/themes/all-themes.css',
+            'assets/css/myStyle.css');
+
+        $data["js"] = array(
+            'assets/vendors/plugins/jquery/jquery.min.js',
+            'assets/vendors/plugins/bootstrap/js/bootstrap.js',
+            'assets/vendors/plugins/bootstrap-select/js/bootstrap-select.js',
+            'assets/vendors/plugins/jquery-slimscroll/jquery.slimscroll.js',
+            'assets/vendors/plugins/bootstrap-notify/bootstrap-notify.js',
+            'assets/vendors/plugins/node-waves/waves.js',
+            'assets/vendors/plugins/momentjs/moment.js',
+            'assets/vendors/plugins/sweetalert/sweetalert.min.js',
+            'assets/vendors/plugins/autosize/autosize.js',
+            'assets/vendors/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js',
+            'assets/vendors/js/admin.js',
+            'assets/vendors/js/demo.js',
+            'assets/js/program.js'
+            );
+        
+        $this->admin_page("addProgram", $data);
     }
     
 }

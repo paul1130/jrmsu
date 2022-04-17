@@ -104,4 +104,16 @@ class User_model extends MY_Model{
         
         return $this->db->insert(user_tbl, $data);
     }
+
+
+    public function update_user($user_id)
+    {
+        $data = array(
+            'asdf' => 1
+        );
+
+        $this->db->where('id', $user_id);
+
+        return $this->db->update(user_tbl, $data);
+    }
 }

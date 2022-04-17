@@ -16,13 +16,15 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                                <button type="button" data-toggle="modal" href="#addProgram" class="btn bg-blue waves-effect">Add Program</button>
-                            <table id="medicines-table" class="table table-bordered table-striped table-hover">
+                                <a href="<?= base_url('program/new') ?>" class="btn bg-blue waves-effect" role="button">Add Program</a>
+                            <table id="programs-table" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr style="font-size: 12px">
-                                        <th>Medicine Code</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
+                                        <th>Title</th>
+                                        <th>Conducted Date</th>
+                                        <th>Implementor</th>
+                                        <th>Remarks</th>
+                                        <th>Moa Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -36,13 +38,40 @@
         </div>
     </section>
 </body>
-<?php $this->load->view('admin/modals/addProgram'); ?>
-<?php $this->load->view('admin/modals/updateMedicine'); ?>
+<?php //$this->load->view('admin/modals/addProgram'); ?>
+<?php //$this->load->view('admin/modals/updateprogram'); ?>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
+
+        var programs_table = $('#programs-table').DataTable({
+        dom: 'frtip',
+        responsive: true,
+        order: [[ 1, "asc" ]],
+        // buttons: [
+        //     {
+        //         extend: 'pdf',
+        //         title: 'Proofsheet Summary'
+        //     }
+        // ],
+        buttons: [
+            'copy', 'excel', 'pdf'
+        ],
+        columnDefs: [ 
+            {
+                orderable: false,
+    //            className: 'select-checkbox',
+                targets:   5
+    //            width: "3%"
+            }
+        ],
+    //    select: {
+    //        style:    'multi',
+    //        selector: 'td:first-child'
+    //    }
+});
         
-    medicines.fetch_medicines();
+    programs.fetch_programs();
     
     var sidemenu = $('#menu-programs').removeClass().addClass('active');
 });

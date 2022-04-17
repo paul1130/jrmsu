@@ -91,13 +91,13 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 //    public $profile_tbl = "profile";
 //---------------------------------------------------------my constants
 //---db tables
+define('attachment_tbl','attachment_tbl');
+define('beneficiary_tbl','beneficiary_tbl');
+define('course_tbl','course_tbl');
+define('implementor_tbl','implementor_tbl');
+define('program_tbl','program_tbl');
 define('user_tbl','user_tbl');
 
-define('account_tbl','account_tbl');
-define('services_tbl','services_tbl');
-define('medicine_tbl','medicine_tbl');
-define('appointment_tbl','appointment_tbl');
-define('pat_tbl','pat_tbl');
-define('pat_medicine_tbl','pat_medicine_tbl');
-define('pat_services_tbl','pat_services_tbl');
-define('feedback_tbl','feedback_tbl');
+// list of values
+define('user_type', array('admin' => 'Admin', 'dean' => 'Dean', 'secretary' => 'Secretary'));
+define('moa_status', array('approve' => 'Approve', 'proponents' => 'Proponents'));

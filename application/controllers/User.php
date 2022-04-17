@@ -134,4 +134,31 @@ class User extends MY_Controller{
         }
         echo json_encode($result);
     }
+
+    public function update_user() {
+        $result = array('status' => false);
+        $this->form_validation->set_rules('first_name','First Name','trim|required');
+        $this->form_validation->set_rules('middle_name','Middle Name','trim|required');
+        $this->form_validation->set_rules('last_name','Last Name','trim|required');
+        $this->form_validation->set_rules('type','User Type','trim|required');
+        // $this->form_validation->set_rules('email','Email','trim|required|valid_email');
+        $this->form_validation->set_rules('username','Username','trim|required|min_length[3]');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
+        
+        if ($this->form_validation->run() === FALSE){
+            $result['error_first_name'] = form_error('first_name');
+            $result['error_middle_name'] = form_error('middle_name');
+            $result['error_last_name'] = form_error('last_name');
+            $result['error_type'] = form_error('type');
+            $result['error_username'] = form_error('username');
+            $result['error_password'] = form_error('password');
+            $result['error_confirm_password'] = form_error('confirm_password');
+        }else{
+            if ($this->user_model->update_user()) {
+                $result['status'] = true;
+            }
+        }
+        echo json_encode($result);
+    }
 }
