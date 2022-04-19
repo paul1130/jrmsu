@@ -73,6 +73,18 @@ class Program extends MY_Controller{
         echo json_encode($result);
     }
 
+    public function valid_implementor($data) 
+    {
+        // $data = $this->input->post('implementor');
+        var_dump($data);
+        if($data == "") {
+            $this->form_validation->set_message('valid_implementor', 'The {field} field is required!');
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
     public function add_program()
     {
         $result = array('status' => false);
@@ -80,7 +92,8 @@ class Program extends MY_Controller{
         $this->form_validation->set_rules('date','Program Date','trim|required');
         $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required|alpha_numeric');
         $this->form_validation->set_rules('remarks','Remarks','trim|required|alpha_numeric');
-        $this->form_validation->set_rules('moa_status', 'Moa Status', 'required|alpha_numeric');
+        $this->form_validation->set_rules('moa_status', 'Moa Status', 'trim|required|alpha_numeric');
+        $this->form_validation->set_rules('implementor[]','Implementing College','callback_valid_implementor');
         $this->form_validation->set_rules('beneficiary','Number of Beneficiary','trim|required|integer');
         $this->form_validation->set_rules('trained', 'No. Of Persons Trained', 'trim|required|integer');
         $this->form_validation->set_rules('conducted', 'Place conducted', 'trim|required');
@@ -96,6 +109,7 @@ class Program extends MY_Controller{
             $result['error_beneficiary'] = form_error('beneficiary');
             $result['error_remarks'] = form_error('remarks');
             $result['error_moa_status'] = form_error('moa_status');
+            $result['error_implementor'] = form_error('implementor[]');
             $result['error_trained'] = form_error('trained');
             $result['error_conducted'] = form_error('conducted');
             $result['error_started'] = form_error('started');
@@ -123,18 +137,32 @@ class Program extends MY_Controller{
             );
 
             $record_id = $this->program_model->insert_program($data);
+
+            $implementor_data = [];
+            foreach($this->input->post("implementor") as $implementor) {
+                array_push($implementor_data, array(
+                    'program_id' => $record_id,
+                    'course_id' => $implementor,
+                    'created_date' => $this->program_model->get_current_date(),
+                    'created_by' =>  $this->session->userdata('user_data')['id'] 
+                ));
+            }
+
+            $this->program_model->insert_implementor($implementor_data);
+
             if ($record_id) {
                 $result['status'] = true;
                 $result['id'] = $record_id;
             }
         }
+        // var_dump($this->input->post());
         echo json_encode($result);
     }
 
     public function upload_file() { 
    
         $data = [];
-        $result = array('status' => false, 'error' => []);
+        $result = array('status' => false);
      
         $count = count($_FILES['files']['name']);
       
@@ -158,16 +186,26 @@ class Program extends MY_Controller{
       
             if($this->upload->do_upload('file')){
                 $uploadData = $this->upload->data();
-                $filename = $uploadData['file_name'];
-        
-                $data['totalFiles'][] = $filename;
-            } else {
-                $result['error'] = array('error' => $this->upload->display_errors());
-            }
+                var_dump($uploadData);
+
+                $data = array(
+                    'record_id' => $this->input->post("record_id"),
+                    'type' => 'Program Attachment',
+                    'path' => '',
+                    'file_name' => $uploadData["file_name"],
+                    'original_file_name' => $uploadData["orig_name"],
+                    'created_date' => $this->program_model->get_current_date(),
+                    'created_by' =>  $this->session->userdata('user_data')['id'] 
+                );
+    
+                $this->program_model->insert_attachment($data);
+            } 
           }
      
         }
-     
+        $result["error"] = $this->upload->display_errors();
+        $result["status"] = $result["error"] == "" ? TRUE : $result["status"];
+
         echo json_encode($result);
      }
 
@@ -201,7 +239,15 @@ class Program extends MY_Controller{
             'assets/js/program.js'
             );
         
+        $data["courses"] = $this->program_model->get_courses();    
+        
         $this->admin_page("addProgram", $data);
+    }
+
+    public function fetch_cources() {
+        $result = array("status" => true);
+        $result["courses"] = $this->program_model->get_courses();
+        echo json_encode($result);
     }
     
 }

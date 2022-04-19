@@ -78,7 +78,21 @@
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <select name="implementor[]" class="form-control" placeholder="Implementing College" multiple>
+                                                    <option value='' style='display: none'></option>
+                                                    <?php foreach ($courses as $course) {?>
+                                                        <option value="<?=$course["id"]?>"><?=$course["acronym"]?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <small style="color:red"></small>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-sm-4">
                                         <div class="form-group form-float">
                                             <div class="form-line">
                                                 <input type="text" name="beneficiary" class="form-control" required="required">
@@ -87,7 +101,7 @@
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="form-group form-float">
                                             <div class="form-line">
                                                 <input type="text" name="trained" class="form-control" required="required">
@@ -190,5 +204,8 @@
         clearButton: true,
         date: false
     });
+
+    // $("#add-program-form select[name=myTime]").selectpicker("destroy");
+    // $("#add-program-form select[name=myTime]").selectpicker();
 });
 </script>

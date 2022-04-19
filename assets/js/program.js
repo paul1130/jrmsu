@@ -49,21 +49,34 @@ var programs = {
             dataType: 'json'
         }).done(function(data) {
             if (data.status) {
+                var form_data =  new FormData($("#attachment-form")[0]);
+                form_data.append('record_id', data.id);
+
                 $.ajax({
                     type: 'POST',
                     url:  BASE_URL + "program/upload_file",
-                    data: $("#attachment-form").serialize(),
-                    dataType: 'json',
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
                     beforeSend: function() {
-                        swal(
-                            "Uploading...",
-                            "Please wait while we are uploading you attachements",
-                            "info"
-                            );
+                        swal({
+                            title: "Uploading...",
+                            text: "Please wait while we are uploading you attachements",
+                            type: "info",
+                            showConfirmButton: false
+                        });
                     },
                 }).done(function(data) {
                     if(data.status) {
                         swal("Success!","New program added","success");
+                    }else{
+                        swal({
+                            title: "Warning!",
+                            text: "Some files are not uploaded due to some error, please reupload attachment in details section.",
+                            type: "warning"
+                        },function() {
+                            window.location = BASE_URL + "program";
+                        });
                     }
                 })
             } else {

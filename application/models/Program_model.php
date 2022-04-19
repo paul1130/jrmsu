@@ -52,4 +52,22 @@ class Program_model extends MY_Model{
 
         return $this->db->update(user_tbl, $data);
     }
+
+    public function insert_attachment($data)
+    {
+        return $this->db->insert(attachment_tbl, $data);
+    }
+
+    public function get_courses() {
+        $this->db->select('*');
+        $this->db->from(course_tbl);
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+
+    public function insert_implementor($data)
+    {
+        return $this->db->insert_batch(implementor_tbl, $data);
+    }
 }
