@@ -1,5 +1,5 @@
 <body>
-    <aside id="leftsidebar" class="sidebar">
+    <aside id="leftsidebar" class="sidebar" style="width: 260px;">
         <!-- #User Info -->
         <!-- <div class="user-info">
                 <div class="image">

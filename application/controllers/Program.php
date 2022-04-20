@@ -67,7 +67,13 @@ class Program extends MY_Controller{
     public function fetch_programs()
     {
         $result = array('status' => false);
-        $result["programs"]= $this->program_model->get_programs(); 
+        $result["programs"] = $this->program_model->get_programs(); 
+
+        foreach($result["programs"] as $key => $value) {
+            $implementor = $this->program_model->get_implementor($value["id"]);
+            $result["programs"][$key]["implementor"] =  $implementor != null ? $implementor["implementor"] : '';
+        }
+
         $result["status"] = true;
         
         echo json_encode($result);
@@ -75,8 +81,6 @@ class Program extends MY_Controller{
 
     public function valid_implementor($data) 
     {
-        // $data = $this->input->post('implementor');
-        var_dump($data);
         if($data == "") {
             $this->form_validation->set_message('valid_implementor', 'The {field} field is required!');
             return FALSE;
@@ -186,7 +190,6 @@ class Program extends MY_Controller{
       
             if($this->upload->do_upload('file')){
                 $uploadData = $this->upload->data();
-                var_dump($uploadData);
 
                 $data = array(
                     'record_id' => $this->input->post("record_id"),

@@ -25,6 +25,7 @@ class Program_model extends MY_Model{
         }
         
         $this->db->from(program_tbl);
+        $this->db->order_by('created_date', 'desc');
         $query = $this->db->get();
         
         return $query->result_array();
@@ -41,6 +42,15 @@ class Program_model extends MY_Model{
         return $this->db->insert(implementor_tbl, $data);
     }
 
+    public function get_implementor($program_id) {
+        $this->db->select('group_concat(acronym SEPARATOR ", ") as implementor');
+        $this->db->from(implementor_tbl);
+        $this->db->join(course_tbl, implementor_tbl.'.course_id = '.course_tbl.'.id');
+        $this->db->where('program_id', $program_id);
+        $this->db->group_by('program_id');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 
     public function update_user($user_id)
     {

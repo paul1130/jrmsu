@@ -15,11 +15,18 @@ var programs = {
             programs_table.row.add([
                 data.programs[i]['title'],
                 data.programs[i]['date'],
-                '', 
+                data.programs[i]['implementor'],
                 data.programs[i]['remarks'],
                 data.programs[i]['moa_status'],
-                '<button type="button" class="btn btn-sm bg-green waves-effect btn-updt">Update</button> ' +
-                '<button type="button" class="btn btn-sm bg-red waves-effect btn-del">Delete</button>'
+                data.programs[i]['created_date'],
+                `<div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">More..
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">View Details</a></li>
+                    <li><a href="#">Delete</a></li>
+                    </ul>
+                </div>`
                 
             ]).draw(false);
         }
@@ -66,16 +73,30 @@ var programs = {
                             showConfirmButton: false
                         });
                     },
-                }).done(function(data) {
-                    if(data.status) {
-                        swal("Success!","New program added","success");
+                }).done(function(data2) {
+                    let result = JSON.parse(data2);
+
+                    if(result.status) {
+                        swal({
+                            title: "Success!",
+                            text: "New program added!",
+                            type: "success"
+                        }, function() {
+                            window.location = BASE_URL + "program";
+                        });
                     }else{
                         swal({
                             title: "Warning!",
                             text: "Some files are not uploaded due to some error, please reupload attachment in details section.",
                             type: "warning"
                         },function() {
-                            window.location = BASE_URL + "program";
+                            swal({
+                                title: "Success!",
+                                text: "New program added!",
+                                type: "success"
+                            }, function() {
+                                window.location = BASE_URL + "program";
+                            });
                         });
                     }
                 })
@@ -96,6 +117,12 @@ var programs = {
                     $("#add-program-form input[name=conducted]").closest(".form-group").find("small").html(data.error_conducted);
                 }else{
                     $("#add-program-form input[name=conducted]").closest(".form-group").find("small").html("");
+                }
+
+                if (data.error_implementor != null) {
+                    $("#add-program-form .implementor").closest(".form-group").find("small").html(data.error_implementor);
+                }else{
+                    $("#add-program-form .implementor").closest(".form-group").find("small").html("");
                 }
 
                 if (data.error_date != null) {

@@ -25,6 +25,7 @@
                                         <th>Implementor</th>
                                         <th>Remarks</th>
                                         <th>Moa Status</th>
+                                        <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -47,7 +48,7 @@
         var programs_table = $('#programs-table').DataTable({
         dom: 'frtip',
         responsive: true,
-        order: [[ 1, "asc" ]],
+        order: [[ 5, "desc" ]],
         // buttons: [
         //     {
         //         extend: 'pdf',
@@ -65,10 +66,15 @@
     //            width: "3%"
             }
         ],
-    //    select: {
-    //        style:    'multi',
-    //        selector: 'td:first-child'
-    //    }
+        "columns": [
+            null,
+            null,
+            null,
+            { "width": "5%" },
+            { "width": "8%" },
+            null,
+            { "width": "8%" }
+        ]
 });
         
     programs.fetch_programs();
