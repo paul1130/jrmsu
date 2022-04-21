@@ -253,4 +253,59 @@ class Program extends MY_Controller{
         echo json_encode($result);
     }
     
+    public function program_details() {
+        $data["page_title"] = "Program - Details";
+        $data["css"] = array(
+            'assets/vendors/plugins/bootstrap/css/bootstrap.css',
+            'assets/vendors/plugins/node-waves/waves.css',
+            'assets/vendors/plugins/animate-css/animate.css',
+            'assets/vendors/plugins/bootstrap-select/css/bootstrap-select.css',
+            'assets/vendors/plugins/sweetalert/sweetalert.css',
+            'assets/vendors/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+            'assets/vendors/css/style.css',
+            'assets/vendors/css/themes/all-themes.css',
+            'assets/css/myStyle.css');
+
+        $data["js"] = array(
+            'assets/vendors/plugins/jquery/jquery.min.js',
+            'assets/vendors/plugins/bootstrap/js/bootstrap.js',
+            'assets/vendors/plugins/bootstrap-select/js/bootstrap-select.js',
+            'assets/vendors/plugins/jquery-slimscroll/jquery.slimscroll.js',
+            'assets/vendors/plugins/bootstrap-notify/bootstrap-notify.js',
+            'assets/vendors/plugins/node-waves/waves.js',
+            'assets/vendors/plugins/momentjs/moment.js',
+            'assets/vendors/plugins/sweetalert/sweetalert.min.js',
+            'assets/vendors/plugins/autosize/autosize.js',
+            'assets/vendors/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js',
+            'assets/vendors/js/admin.js',
+            'assets/vendors/js/demo.js',
+            'assets/js/program.js'
+            );
+
+        $program_id = $this->input->get('id');
+        $data["program"] = $this->program_model->get_programs($program_id);  
+        $data["implementor"] = $this->program_model->get_implementor($program_id);
+        $data["courses"] = $this->program_model->get_courses();   
+        $data["attachments"] = $this->program_model->get_attachments($program_id); 
+        
+        $this->admin_page("viewProgram", $data);
+    }
+
+    public function download_attachment() {
+        $this->load->helper('download');
+
+        $filename = $this->input->get("filename");
+        $original_file_name = $this->input->get("orig_filename");
+        force_download($original_file_name, file_get_contents('uploads/'.$filename));
+    }
+
+    public function delete_attachment() {
+        $result = array("status" => false);
+
+        $att_id = $this->input->get("att_id");
+        $this->program_model->delete_attachment($att_id);
+        $result["status"] = true;
+
+        echo json_encode($result);
+    }
 }

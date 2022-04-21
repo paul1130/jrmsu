@@ -54,3 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['program/new'] = 'program/new_program';
+$route['program/details'] = 'program/program_details';
+$route['program/attachment-download'] = 'program/download_attachment';
+$route['program/delete-attachment'] = 'program/delete_attachment';

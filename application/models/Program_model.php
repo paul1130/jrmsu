@@ -76,8 +76,27 @@ class Program_model extends MY_Model{
         return $query->result_array();
     }
 
+    public function get_attachments($program_id) {
+        $this->db->select('*');
+        $this->db->from(attachment_tbl);
+        $this->db->where('record_id', $program_id);
+        $this->db->where('is_deleted', 0);
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+
     public function insert_implementor($data)
     {
         return $this->db->insert_batch(implementor_tbl, $data);
+    }
+
+    public function delete_attachment($att_id) {
+        $data = array(
+            'is_deleted' => 1,
+        );
+        
+        $this->db->where('id', $att_id);
+        return $this->db->update(attachment_tbl, $data);
     }
 }

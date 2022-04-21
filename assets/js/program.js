@@ -23,7 +23,7 @@ var programs = {
                     <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">More..
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                    <li><a href="#">View Details</a></li>
+                    <li><a href="${BASE_URL}program/details?id=${data.programs[i]['id']}">View Details</a></li>
                     <li><a href="#">Delete</a></li>
                     </ul>
                 </div>`
