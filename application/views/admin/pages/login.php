@@ -1,7 +1,6 @@
 <body class="login-page vertical-center" style="margin-top: -50px; width: 300px">
     <div class="login-box">
         <div class="logo">
-            <!-- <img class="img-responsive thumbnail" src="<?= base_url("assets/img/logo.png") ?>"> -->
             <a href="javascript:void(0);" style="font-size: 20px">JRMSU Extension Program</a>
         </div>
         <div class="card" style="width: 360px;">

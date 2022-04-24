@@ -11,7 +11,7 @@
  *
  * @author DRAINWIZ-pc
  */
-class Program_model extends MY_Model{
+class Beneficiary_model extends MY_Model{
     public function __construct() {
         parent::__construct();
     }

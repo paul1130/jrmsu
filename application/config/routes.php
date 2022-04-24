@@ -55,5 +55,12 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['program/new'] = 'program/new_program';
 $route['program/details'] = 'program/program_details';
+$route['program/update'] = 'program/update_program';
+$route['program/delete'] = 'program/delete_program';
 $route['program/attachment-download'] = 'program/download_attachment';
 $route['program/delete-attachment'] = 'program/delete_attachment';
+
+$route['beneficiary/new'] = 'beneficiary/new_beneficiary';
+$route['beneficiary/details'] = 'beneficiary/beneficiary_details';
+$route['beneficiary/update'] = 'beneficiary/update_beneficiary';
+$route['beneficiary/delete'] = 'beneficiary/delete_beneficiary';

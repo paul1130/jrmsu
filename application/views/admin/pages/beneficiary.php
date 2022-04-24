@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <ol class="breadcrumb breadcrumb-col-cyan">
-                    <li><a href="javascript:void(0);">Extension Programs</a></li>
+                    <li><a href="javascript:void(0);">Beneficiary</a></li>
                 </ol>
             </div>
             
@@ -12,17 +12,18 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                               Programs Table
+                               Beneficiaries Table
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                                <button type="button" data-toggle="modal" href="#addMedicine" class="btn bg-blue waves-effect">Add Medicine</button>
-                            <table id="medicines-table" class="table table-bordered table-striped table-hover">
+                            <a href="<?= base_url('beneficiary/new') ?>" class="btn bg-blue waves-effect" role="button">Add Beneficiary</a>
+                            <table id="beneficiaries-table" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr style="font-size: 12px">
-                                        <th>Medicine Code</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
+                                        <th>Full Name</th>
+                                        <th>Program</th>
+                                        <th>Birthdate</th>
+                                        <th>Contact No</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -36,14 +37,44 @@
         </div>
     </section>
 </body>
-<?php $this->load->view('admin/modals/addMedicine'); ?>
-<?php $this->load->view('admin/modals/updateMedicine'); ?>
+<?php //$this->load->view('admin/modals/addMedicine'); ?>
+<?php //$this->load->view('admin/modals/updateMedicine'); ?>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         
-    medicines.fetch_medicines();
+        var programs_table = $('#beneficiaries-table').DataTable({
+            dom: 'frtip',
+            responsive: true,
+            order: [[ 0, "desc" ]],
+            // buttons: [
+            //     {
+            //         extend: 'pdf',
+            //         title: 'Proofsheet Summary'
+            //     }
+            // ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+            columnDefs: [ 
+                {
+                    orderable: false,
+                    targets:   4
+                }
+            ],
+            // "columns": [
+            //     null,
+            //     { "width": "12%" },
+            //     null,
+            //     { "width": "5%" },
+            //     { "width": "8%" },
+            //     { "width": "13%" },
+            //     { "width": "8%" }
+            // ]
+    });
+        
+    // programs.fetch_programs();
     
-    var sidemenu = $('#menu-programs').removeClass().addClass('active');
+    var sidemenu = $('#menu-beneficiary').removeClass().addClass('active');
 });
 </script>

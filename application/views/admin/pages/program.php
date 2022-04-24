@@ -68,11 +68,11 @@
         ],
         "columns": [
             null,
-            null,
+            { "width": "12%" },
             null,
             { "width": "5%" },
             { "width": "8%" },
-            null,
+            { "width": "13%" },
             { "width": "8%" }
         ]
 });
