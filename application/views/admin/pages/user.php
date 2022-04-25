@@ -40,7 +40,31 @@
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
-        
+
+    var users_table = $('#users-table').DataTable({
+        dom: 'Bfrtip',
+        responsive: true,
+        order: [[ 1, "asc" ]],
+        buttons: [
+            {
+                extend: 'csv',
+                title: 'Proofsheet Summary'
+            }
+        ],
+        columnDefs: [ 
+            {
+                orderable: false,
+    //            className: 'select-checkbox',
+                targets:   1
+    //            width: "3%"
+            }
+        ],
+    //    select: {
+    //        style:    'multi',
+    //        selector: 'td:first-child'
+    //    }
+    });
+    
     users.fetch_users();
     
     var sidemenu = $('#menu-user').removeClass().addClass('active');

@@ -72,31 +72,6 @@ var user = {
     },
 }
 
-
-var users_table = $('#users-table').DataTable({
-    dom: 'Bfrtip',
-    responsive: true,
-    order: [[ 1, "asc" ]],
-    buttons: [
-        {
-            extend: 'csv',
-            title: 'Proofsheet Summary'
-        }
-    ],
-    columnDefs: [ 
-        {
-            orderable: false,
-//            className: 'select-checkbox',
-            targets:   1
-//            width: "3%"
-        }
-    ],
-//    select: {
-//        style:    'multi',
-//        selector: 'td:first-child'
-//    }
-});
-
 var users = {
     load_users : function(data){
         var users_table = $('#users-table').DataTable();

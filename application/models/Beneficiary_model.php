@@ -16,58 +16,60 @@ class Beneficiary_model extends MY_Model{
         parent::__construct();
     }
     
-    public function get_programs($program_id = null)
+    public function get_beneficiaries($beneficiary_id = null)
     {
-        $this->db->select('*');
+        $this->db->select(beneficiary_tbl.'.*, program_tbl.title');
 
-        if ($program_id) {
-            $this->db->where("id", $program_id);
+        if ($beneficiary_id) {
+            $this->db->where(beneficiary_tbl.".id", $beneficiary_id);
         }
         
-        $this->db->from(program_tbl);
-        $this->db->where("is_deleted", 0);
+        $this->db->from(beneficiary_tbl);
+        $this->db->join(program_tbl, beneficiary_tbl.'.program_id = '.program_tbl.'.id');
+        $this->db->where(beneficiary_tbl.".is_deleted", 0);
+        $this->db->where(program_tbl.".is_deleted", 0);
         $this->db->order_by('created_date', 'desc');
         $query = $this->db->get();
         
         return $query->result_array();
     }
 
-    public function insert_program($data)
+    public function insert_beneficiary($data)
     {
-        $this->db->insert(program_tbl, $data);
+        $this->db->insert(beneficiary_tbl, $data);
         return $this->db->insert_id();
 
     }
 
-    public function update_program($data) {
+    public function update_beneficiary($data) {
 
-        $program_id = $data["program_id"];
+        $beneficiary_id = $data["beneficiary_id"];
         $update_data = $data["updated_data"];
         
-        $this->db->where('id', $program_id);
-        return $this->db->update(program_tbl, $update_data);
+        $this->db->where('id', $beneficiary_id);
+        return $this->db->update(beneficiary_tbl, $update_data);
     }
 
     public function add_implementor($data) {
         return $this->db->insert(implementor_tbl, $data);
     }
 
-    public function get_implementor($program_id) {
+    public function get_implementor($beneficiary_id) {
         $this->db->select('group_concat(acronym SEPARATOR ", ") as implementor');
         $this->db->from(implementor_tbl);
         $this->db->join(course_tbl, implementor_tbl.'.course_id = '.course_tbl.'.id');
-        $this->db->where('program_id', $program_id);
-        $this->db->group_by('program_id');
+        $this->db->where('beneficiary_id', $beneficiary_id);
+        $this->db->group_by('beneficiary_id');
         $this->db->where('is_active', 1);
         $query = $this->db->get();
         return $query->row_array();
     }
 
-    public function get_all_implementor($program_id) {
+    public function get_all_implementor($beneficiary_id) {
         $this->db->select('*');
         $this->db->from(implementor_tbl);
         $this->db->join(course_tbl, implementor_tbl.'.course_id = '.course_tbl.'.id');
-        $this->db->where('program_id', $program_id);
+        $this->db->where('beneficiary_id', $beneficiary_id);
         $this->db->where('is_active', 1);
         $query = $this->db->get();
         return $query->result_array();
@@ -97,10 +99,10 @@ class Beneficiary_model extends MY_Model{
         return $query->result_array();
     }
 
-    public function get_attachments($program_id) {
+    public function get_attachments($beneficiary_id) {
         $this->db->select('*');
         $this->db->from(attachment_tbl);
-        $this->db->where('record_id', $program_id);
+        $this->db->where('record_id', $beneficiary_id);
         $this->db->where('is_deleted', 0);
         $query = $this->db->get();
         
@@ -118,7 +120,7 @@ class Beneficiary_model extends MY_Model{
         );
         
         $this->db->where('course_id', $data["course_id"]);
-        $this->db->where('program_id', $data["program_id"]);
+        $this->db->where('beneficiary_id', $data["beneficiary_id"]);
         return $this->db->update(implementor_tbl, $update_data);
     }
 
@@ -131,12 +133,12 @@ class Beneficiary_model extends MY_Model{
         return $this->db->update(attachment_tbl, $data);
     }
 
-    public function delete_program($program_id) {
+    public function delete_beneficiary($beneficiary_id) {
         $data = array(
             'is_deleted' => 1,
         );
         
-        $this->db->where('id', $program_id);
-        return $this->db->update(program_tbl, $data);
+        $this->db->where('id', $beneficiary_id);
+        return $this->db->update(beneficiary_tbl, $data);
     }
 }

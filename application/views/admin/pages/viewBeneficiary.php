@@ -4,7 +4,7 @@
             <div class="block-header">
             <ol class="breadcrumb breadcrumb-col-cyan">
                 <li><a href="<?= base_url('beneficiary') ?>">Beneficiary</a></li>
-                <li><a href="javascript:void(0);" style="color: #333 !important;">Add Beneficiary</a></li>
+                <li><a href="javascript:void(0);" style="color: #333 !important;">View Beneficiary</a></li>
             </ol>
             </div>
             <div class="row clearfix">
@@ -22,7 +22,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" name="first_name" class="form-control" required="required">
+                                                    <input type="text" name="first_name" class="form-control" required="required" value="<?= $beneficiary[0]["first_name"] ?>">
                                                     <label class="form-label">First Name</label>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -31,7 +31,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" name="middle_name" class="form-control" required="required">
+                                                    <input type="text" name="middle_name" class="form-control" required="required" value="<?= $beneficiary[0]["middle_name"] ?>">
                                             <label class="form-label">Middle Name</label>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -40,7 +40,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" name="last_name" class="form-control" required="required">
+                                                    <input type="text" name="last_name" class="form-control" required="required" value="<?= $beneficiary[0]["last_name"] ?>">
                                                     <label class="form-label">Last Name</label>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -52,7 +52,7 @@
                                                     <i class="material-icons">perm_contact_calendar</i>
                                                 </span> -->
                                                 <div class="form-line">
-                                                    <input type="text" name="dob" class="datepicker form-control" placeholder="Birth Date">
+                                                    <input type="text" name="dob" class="datepicker form-control" placeholder="Birth Date" value="<?= $beneficiary[0]["birth_date"] ?>">
                                                 </div>
                                                 <small style="color:red"></small>
                                             </div>
@@ -60,7 +60,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" name="contact" class="form-control" required="required">
+                                                    <input type="text" name="contact" class="form-control" required="required" value="<?= $beneficiary[0]["contact_no"] ?>">
                                                     <label class="form-label">Contact No</label>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -69,7 +69,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" name="address" class="form-control" required="required">
+                                                    <input type="text" name="address" class="form-control" required="required" value="<?= $beneficiary[0]["address"] ?>">
                                                     <label class="form-label">Address</label>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -80,8 +80,8 @@
                                                 <div class="form-line">
                                                     <select name="civil_status" class="form-control" placeholder="Civil Status" >
                                                         <option value='' style='display: none'></option>
-                                                        <option value='single'>Single</option>
-                                                        <option value='married'>Married</option>
+                                                        <option value='single' <?= $beneficiary[0]["civil_status"] == "single" ? "selected" : '' ?>>Single</option>
+                                                        <option value='married'<?= $beneficiary[0]["civil_status"] == "married" ? "selected" : '' ?>>Married</option>
                                                     </select>
                                                 </div>
                                                 <small style="color:red"></small>
@@ -93,7 +93,7 @@
                                                     <select name="program_id" class="form-control implementor" placeholder="Program" >
                                                         <option value='' style='display: none'></option>
                                                         <?php foreach($programs as $program) { ?>
-                                                            <option value='<?= $program["id"] ?>'><?= $program["title"] ?></option>
+                                                            <option value='<?= $program["id"] ?>' <?= $program["id"] == $beneficiary[0]["program_id"] ? "selected" : '' ?>><?= $program["title"] ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -115,7 +115,7 @@
                                             </div>
                                         </div> -->
                                         <div class="col-sm-12"> 
-                                            <img src="<?= base_url("assets/img/profile-pic.jpg") ?>" id="preview-pic" class="img-rounded" alt="Cinque Terre" height="303">
+                                            <img src="<?= $profile_pic ? base_url("uploads/profile/".$profile_pic[0]["file_name"]) : base_url("assets/img/profile-pic.jpg") ?>" id="preview-pic" class="img-rounded" alt="Cinque Terre" height="303">
                                         </div>
                                         <div class="col-sm-12">
                                             <label for="profile-pic" type="button" class="btn bg-orange waves-effect">Browse</label>

@@ -73,7 +73,7 @@
             // ]
     });
         
-    // programs.fetch_programs();
+    beneficiary.fetch_beneficiaries();
     
     var sidemenu = $('#menu-beneficiary').removeClass().addClass('active');
 });

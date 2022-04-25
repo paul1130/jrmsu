@@ -18,6 +18,12 @@
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
+                <li id="menu-dashboard">
+                    <a href="<?= base_url('program') ?>">
+                        <i class="material-icons">dashboard</i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
                 <li id="menu-programs">
                     <a href="<?= base_url('program') ?>">
                         <i class="material-icons">library_books</i>

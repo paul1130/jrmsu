@@ -4,10 +4,10 @@ var beneficiary = {
         beneficiaries_table.clear().draw();
         for (var i = 0; i < data.beneficiaries.length; i++) {
             beneficiaries_table.row.add([
-                '',
-                '',
-                '',
-                '',
+                `${data.beneficiaries[i]['first_name']} ${data.beneficiaries[i]['last_name']}`,
+                `${data.beneficiaries[i]['title']}`,
+                data.beneficiaries[i]['birth_date'],
+                data.beneficiaries[i]['contact_no'],
                 `<div class="dropdown">
                     <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">More..
                     <span class="caret"></span></button>
@@ -28,9 +28,8 @@ var beneficiary = {
             data: {},
             dataType: 'json'
         }).done(function(data) {
-            console.log(data);
             if (data.status) {
-                beneficiaries.load_beneficiaries(data);
+                beneficiary.load_beneficiaries(data);
             } else {
                 console.log("fail get beneficiaries");
             }
@@ -149,40 +148,28 @@ var beneficiary = {
             dataType: 'json'
         }).done(function(data) {
             if (data.status) {
-                var form_data =  new FormData($("#attachment-form")[0]);
-                form_data.append('record_id', data.id);
+                let file = $("#profile-pic").val();
+                if(file) {
+                    var form_data =  new FormData($("#profile-pic-form")[0]);
+                    form_data.append('record_id', data.id);
+                    $.ajax({
+                        type: 'POST',
+                        url:  BASE_URL + "beneficiary/upload-profile-pic",
+                        data: form_data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function() {
+                            swal({
+                                title: "Uploading...",
+                                text: "Please wait while we are uploading you attachements",
+                                type: "info",
+                                showConfirmButton: false
+                            });
+                        },
+                    }).done(function(data2) {
+                        let result = JSON.parse(data2);
 
-                $.ajax({
-                    type: 'POST',
-                    url:  BASE_URL + "beneficiary/upload_file",
-                    data: form_data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function() {
-                        swal({
-                            title: "Uploading...",
-                            text: "Please wait while we are uploading you attachements",
-                            type: "info",
-                            showConfirmButton: false
-                        });
-                    },
-                }).done(function(data2) {
-                    let result = JSON.parse(data2);
-
-                    if(result.status) {
-                        swal({
-                            title: "Success!",
-                            text: "New beneficiary added!",
-                            type: "success"
-                        }, function() {
-                            window.location = BASE_URL + "beneficiary";
-                        });
-                    }else{
-                        swal({
-                            title: "Warning!",
-                            text: "Some files are not uploaded due to some error, please reupload attachment in details section.",
-                            type: "warning"
-                        },function() {
+                        if(result.status) {
                             swal({
                                 title: "Success!",
                                 text: "New beneficiary added!",
@@ -190,86 +177,78 @@ var beneficiary = {
                             }, function() {
                                 window.location = BASE_URL + "beneficiary";
                             });
-                        });
-                    }
-                })
-            } else {
-                if (data.error_title != null) {
-                    $("#add-beneficiary-form input[name=title]").closest(".form-group").find("small").html(data.error_title);
+                        }else{
+                            swal({
+                                title: "Warning!",
+                                text: "Some files are not uploaded due to some error, please reupload attachment in details section.",
+                                type: "warning"
+                            },function() {
+                                swal({
+                                    title: "Success!",
+                                    text: "New beneficiary added!",
+                                    type: "success"
+                                }, function() {
+                                    window.location = BASE_URL + "beneficiary";
+                                });
+                            });
+                        }
+                    })
                 }else{
-                    $("#add-beneficiary-form input[name=title]").closest(".form-group").find("small").html("");
+                    swal({
+                        title: "Success!",
+                        text: "New beneficiary added!",
+                        type: "success"
+                    }, function() {
+                        window.location = BASE_URL + "beneficiary";
+                    });
+                }
+            } else {
+                if (data.error_first_name != null) {
+                    $("#add-beneficiary-form input[name=first_name]").closest(".form-group").find("small").html(data.error_first_name);
+                }else{
+                    $("#add-beneficiary-form input[name=first_name]").closest(".form-group").find("small").html("");
                 }
                 
-                if (data.error_beneficiary != null) {
-                    $("#add-beneficiary-form input[name=beneficiary]").closest(".form-group").find("small").html(data.error_beneficiary);
+                if (data.error_middle_name != null) {
+                    $("#add-beneficiary-form input[name=middle_name]").closest(".form-group").find("small").html(data.error_middle_name);
                 }else{
-                    $("#add-beneficiary-form input[name=beneficiary]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form input[name=middle_name]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_conducted != null) {
-                    $("#add-beneficiary-form input[name=conducted]").closest(".form-group").find("small").html(data.error_conducted);
+                if (data.error_last_name != null) {
+                    $("#add-beneficiary-form input[name=last_name]").closest(".form-group").find("small").html(data.error_last_name);
                 }else{
-                    $("#add-beneficiary-form input[name=conducted]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form input[name=last_name]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_implementor != null) {
-                    $("#add-beneficiary-form .implementor").closest(".form-group").find("small").html(data.error_implementor);
+                if (data.error_dob != null) {
+                    $("#add-beneficiary-form input[name=dob]").closest(".form-group").find("small").html(data.error_dob);
                 }else{
-                    $("#add-beneficiary-form .implementor").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form input[name=dob]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_date != null) {
-                    $("#add-beneficiary-form input[name=date]").closest(".form-group").find("small").html(data.error_date);
+                if (data.error_contact != null) {
+                    $("#add-beneficiary-form input[name=contact]").closest(".form-group").find("small").html(data.error_contact);
                 }else{
-                    $("#add-beneficiary-form input[name=date]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form input[name=contact]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_descriptive_rating != null) {
-                    $("#add-beneficiary-form input[name=descriptive_rating]").closest(".form-group").find("small").html(data.error_descriptive_rating);
+                if (data.error_address != null) {
+                    $("#add-beneficiary-form input[name=address]").closest(".form-group").find("small").html(data.error_address);
                 }else{
-                    $("#add-beneficiary-form input[name=descriptive_rating]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form input[name=address]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_ended != null) {
-                    $("#add-beneficiary-form input[name=ended]").closest(".form-group").find("small").html(data.error_ended);
+                if (data.error_civl_status != null) {
+                    $("#add-beneficiary-form select[name=civil_status]").closest(".form-group").find("small").html(data.error_civl_status);
                 }else{
-                    $("#add-beneficiary-form input[name=ended]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form select[name=civil_status]").closest(".form-group").find("small").html("");
                 }
 
-                if (data.error_moa_status != null) {
-                    $("#add-beneficiary-form input[name=moa_status]").closest(".form-group").find("small").html(data.error_moa_status);
+                if (data.error_program_id != null) {
+                    $("#add-beneficiary-form select[name=program_id]").closest(".form-group").find("small").html(data.error_program_id);
                 }else{
-                    $("#add-beneficiary-form input[name=moa_status]").closest(".form-group").find("small").html("");
-                }
-
-                if (data.error_numerical_rating != null) {
-                    $("#add-beneficiary-form input[name=numerical_rating]").closest(".form-group").find("small").html(data.error_numerical_rating);
-                }else{
-                    $("#add-beneficiary-form input[name=numerical_rating]").closest(".form-group").find("small").html("");
-                }
-
-                if (data.error_partner != null) {
-                    $("#add-beneficiary-form input[name=partner]").closest(".form-group").find("small").html(data.error_partner);
-                }else{
-                    $("#add-beneficiary-form input[name=partner]").closest(".form-group").find("small").html("");
-                }
-
-                if (data.error_remarks != null) {
-                    $("#add-beneficiary-form input[name=remarks]").closest(".form-group").find("small").html(data.error_remarks);
-                }else{
-                    $("#add-beneficiary-form input[name=remarks]").closest(".form-group").find("small").html("");
-                }
-
-                if (data.error_started != null) {
-                    $("#add-beneficiary-form input[name=started]").closest(".form-group").find("small").html(data.error_started);
-                }else{
-                    $("#add-beneficiary-form input[name=started]").closest(".form-group").find("small").html("");
-                }
-
-                if (data.error_trained != null) {
-                    $("#add-beneficiary-form input[name=trained]").closest(".form-group").find("small").html(data.error_trained);
-                }else{
-                    $("#add-beneficiary-form input[name=trained]").closest(".form-group").find("small").html("");
+                    $("#add-beneficiary-form select[name=program_id]").closest(".form-group").find("small").html("");
                 }
             }
         });
@@ -373,6 +352,16 @@ var beneficiary = {
            }
        });
     },
+
+    update_pic : function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#preview-pic').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
     
     // delete_beneficiary : function(data){
     //     $.ajax({
