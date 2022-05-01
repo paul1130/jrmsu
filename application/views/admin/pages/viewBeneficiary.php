@@ -17,7 +17,8 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <form id="add-beneficiary-form">
+                                <form id="update-beneficiary-form">
+                                <input type="hidden" name="beneficiary_id" value="<?= $beneficiary[0]["id"] ?>">
                                     <div class="col-sm-8">
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
@@ -102,30 +103,21 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form id="profile-pic-form" enctype="multipart/form-data">
+                                <form id="update-pic-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="record_id" value="<?= $beneficiary[0]["id"] ?>">
                                     <div class="col-sm-4 text-center">
-                                        <!-- <div class="col-md-6">
-                                            <div id="my_camera" >
-                                            </div>
-                                            <input type="hidden" name="image" class="image-tag">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div id="results">
-                                                Your captured image will appear here...
-                                            </div>
-                                        </div> -->
                                         <div class="col-sm-12"> 
                                             <img src="<?= $profile_pic ? base_url("uploads/profile/".$profile_pic[0]["file_name"]) : base_url("assets/img/profile-pic.jpg") ?>" id="preview-pic" class="img-rounded" alt="Cinque Terre" height="303">
                                         </div>
                                         <div class="col-sm-12">
                                             <label for="profile-pic" type="button" class="btn bg-orange waves-effect">Browse</label>
                                             <input type="file" name="profile_pic[]" id="profile-pic" style="display: none" onchange="beneficiary.update_pic(this)"/>
-                                            <!-- <button type="button" class="btn bg-pink waves-effect" onClick="take_snapshot()">Take Picture</button> -->
+                                            <button type="button" class="btn bg-pink waves-effect" onclick="beneficiary.update_profile_pic()">Update Picture</button>
                                         </div>
                                     </div>
                                 </form>
                                 <div class="col-sm-12">
-                                    <button id="sign-up" style="float: right; margin-right: 50px" type="button" onclick="beneficiary.add_beneficiary()" class="btn bg-green waves-effect">Save</button>
+                                    <button id="sign-up" style="float: right; margin-right: 50px" type="button" onclick="beneficiary.update_beneficiary()" class="btn bg-green waves-effect">Save Changes</button>
                                 </div>
                             </div>
                         </div>

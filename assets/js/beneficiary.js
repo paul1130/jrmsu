@@ -262,11 +262,10 @@ var beneficiary = {
            data: $("#update-beneficiary-form").serialize(),
            dataType: 'json'
        }).done(function(data) {
-           console.log(data);
            if (data.status) {
                 swal({
                     title: "Success!",
-                    text: "beneficiary successfully updated!",
+                    text: "Beneficiary successfully updated!",
                     type: "success"
                 }, function() {
                     location.reload();
@@ -351,6 +350,52 @@ var beneficiary = {
                 }
            }
        });
+    },
+
+    update_profile_pic : function() {
+        let file = $("#profile-pic").val();
+        if(file) {
+            var form_data =  new FormData($("#update-pic-form")[0]);
+            $.ajax({
+                type: 'POST',
+                url:  BASE_URL + "beneficiary/update-profile-pic",
+                data: form_data,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    swal({
+                        title: "Uploading...",
+                        text: "Please wait while we are uploading you attachements",
+                        type: "info",
+                        showConfirmButton: false
+                    });
+                },
+            }).done(function(data) {
+                let result = JSON.parse(data);
+                if(result.status) {
+                    swal({
+                        title: "Success!",
+                        text: "Profile picture successfully updated!",
+                        type: "success"
+                    }, function() {
+                        location.reload();
+                    });
+                }else{
+                    swal({
+                        title: "Oops!",
+                        text: result.error,
+                        html: true,
+                        type: "error"
+                    });
+                }
+            })
+        }else{
+            swal({
+                title: "Warning!",
+                text: "Please select new profile picture.",
+                type: "warning"
+            });
+        }
     },
 
     update_pic : function(input) {

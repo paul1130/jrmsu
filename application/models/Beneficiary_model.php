@@ -75,17 +75,6 @@ class Beneficiary_model extends MY_Model{
         return $query->result_array();
     }
 
-    public function update_user($user_id)
-    {
-        $data = array(
-            'asdf' => 1
-        );
-
-        $this->db->where('id', $user_id);
-
-        return $this->db->update(user_tbl, $data);
-    }
-
     public function insert_attachment($data)
     {
         return $this->db->insert(attachment_tbl, $data);
@@ -140,5 +129,14 @@ class Beneficiary_model extends MY_Model{
         
         $this->db->where('id', $beneficiary_id);
         return $this->db->update(beneficiary_tbl, $data);
+    }
+
+    public function delete_beneficiary_pic($beneficiary_id) {
+        $data = array(
+            'is_deleted' => 1,
+        );
+        
+        $this->db->where('record_id', $beneficiary_id);
+        return $this->db->update(attachment_tbl, $data);
     }
 }
