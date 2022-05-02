@@ -66,3 +66,5 @@ $route['beneficiary/update'] = 'beneficiary/update_beneficiary';
 $route['beneficiary/delete'] = 'beneficiary/delete_beneficiary';
 $route['beneficiary/upload-profile-pic'] = 'beneficiary/upload_profile_pic';
 $route['beneficiary/update-profile-pic'] = 'beneficiary/update_profile_pic';
+
+$route['report/programs'] = 'report/program_report';

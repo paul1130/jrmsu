@@ -14,13 +14,13 @@
 class Report extends MY_Controller{
     public function __construct() {
         parent::__construct();
-        $this->load->model('user_model');
+        $this->load->model('report_model');
     }
 
     public function index()
     {
         if ($this->has_log_in()) {
-            $data["page_title"] = "Programs";
+            $data["page_title"] = "Reports";
             $data["css"] = array(
                 'assets/vendors/plugins/bootstrap/css/bootstrap.css',
                 'assets/vendors/plugins/node-waves/waves.css',
@@ -56,104 +56,20 @@ class Report extends MY_Controller{
                 'assets/vendors/js/checkbox.js',
                 'assets/vendors/js/pages/forms/advanced-form-elements.js',
                 'assets/vendors/js/demo.js',
-                'assets/js/medicines.js');
+                'assets/js/report.js'
+            );
             
-            $this->admin_page('program', $data);
+            $this->admin_page('report', $data);
         }else{
             $this->login_page();
         }
     }
     
-    public function fetch_medicines()
+    public function program_report()
     {
         $result = array('status' => false);
-        $result['medicines']= $this->dent_model->get_medicines(); 
+        $result['programs']= $this->report_model->get_report_1(); 
         $result['status'] = true;
-        
         echo json_encode($result);
     }
-    
-    public function add_medicine()
-    {
-        $result = array('status' => false);
-        
-        $desc = $this->input->post("description");
-        $price = $this->input->post("price");
-        $error = 0;
-        
-        if (empty($desc)) {
-           $error++;
-           $result["error_desc"] = "Please enter medicine description.";
-        }else{
-            if ($this->dent_model->check_medicine($desc)) {
-                $error++;
-                $result["error_exist"] = "This medicine already exist.";
-            }
-        }
-        
-        if (empty($price) || !is_numeric($price)) {
-            $error++;
-            $result["error_price"] = "Price invalid.";
-        }
-        
-        
-        
-        if ($error === 0) {
-            if ($this->dent_model->insert_medicine()) {
-                $result['medicines']= $this->dent_model->get_medicines(); 
-                $result['status'] = true;
-            }
-        }
-        
-        echo json_encode($result);
-    }
-    
-    public function remove_medicine()
-    {
-        $result = array('status' => false);
-        $code = $this->input->post("code");
-        if ($this->dent_model->delete_medicine($code)) {
-            $result['medicines']= $this->dent_model->get_medicines(); 
-            $result['status'] = true;
-        }
-        
-        echo json_encode($result);
-    }
-    
-    public function updt_medicine()
-    {
-        $result = array('status' => false);
-        
-        $desc = $this->input->post("description");
-        $price = $this->input->post("price");
-        $code = $this->input->post("mcode");
-        $error = 0;
-        
-        if (empty($desc)) {
-           $error++;
-           $result["error_desc"] = "Please enter medicine description.";
-        }else{
-            if ($this->dent_model->check_medicine_up($desc,$code)) {
-                $error++;
-                $result["error_exist"] = "This medicine already exist.";
-            }
-        }
-        
-        if (empty($price) || !is_numeric($price)) {
-            $error++;
-            $result["error_price"] = "Price invalid.";
-        }
-        
-        
-        
-        if ($error === 0) {
-            if ($this->dent_model->modify_medicine($code)) {
-                $result['medicines']= $this->dent_model->get_medicines(); 
-                $result['status'] = true;
-            }
-        }
-        
-        echo json_encode($result);
-    }
-    
 }
