@@ -59,6 +59,7 @@ class User extends MY_Controller{
                 'assets/vendors/js/demo.js',
                 'assets/js/user.js');
             
+            $data['colleges'] = $this->user_model->get_college();
             $this->admin_page('user', $data);
         }else{
             $this->login_page();

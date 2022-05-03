@@ -37,7 +37,7 @@ var user = {
         }).done(function(data) {
 //            console.log(data);
             if (data.status) {
-               window.location.href =  BASE_URL + "program";
+               window.location.href =  BASE_URL + "dashboard";
             } else {
                 var form_username = $('#sign-in-form input[name=username]');
                 var form_password = $('#sign-in-form input[name=password]');

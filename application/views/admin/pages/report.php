@@ -125,47 +125,36 @@
                     className: 'btn-success'
                 }
             ],
-            // columnDefs: [ {
-            // "searchable": false,
-            //     "orderable": false,
-            //     "targets": 0
-            // }],
-            // "columns": [
-            //     null,
-            //     { "width": "12%" },
-            //     null,
-            //     { "width": "5%" },
-            //     { "width": "8%" },
-            //     { "width": "13%" },
-            //     { "width": "8%" }
-            // ]
+            "columns": [
+                { "width": "5%" },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
         });
 
         var report_table_2 = $('#report-table-2').DataTable({
             dom: 'Bfrtip',
             responsive: true,
-            order: [[ 0, "desc" ]],
             buttons: [
                 {
                     extend: 'csv',
-                    title: 'Proofsheet Summary'
+                    title: 'Persons Trained',
+                    text: 'Download CSV',
+                    className: 'btn-success'
                 }
             ],
-            columnDefs: [ 
-                {
-                    orderable: false,
-                    targets:   4
-                }
-            ],
-            // "columns": [
-            //     null,
-            //     { "width": "12%" },
-            //     null,
-            //     { "width": "5%" },
-            //     { "width": "8%" },
-            //     { "width": "13%" },
-            //     { "width": "8%" }
-            // ]
+            "columns": [
+                { "width": "5%" },
+                null,
+                null,
+                null,
+                { "width": "13%" },
+                { "width": "13%" }
+            ]
         });
 
         var report_table_3 = $('#report-table-3').DataTable({
@@ -175,7 +164,9 @@
             buttons: [
                 {
                     extend: 'csv',
-                    title: 'Proofsheet Summary'
+                    title: 'Organized Program',
+                    text: 'Download CSV',
+                    className: 'btn-success'
                 }
             ],
             columnDefs: [ 
@@ -184,15 +175,13 @@
                     targets:   4
                 }
             ],
-            // "columns": [
-            //     null,
-            //     { "width": "12%" },
-            //     null,
-            //     { "width": "5%" },
-            //     { "width": "8%" },
-            //     { "width": "13%" },
-            //     { "width": "8%" }
-            // ]
+            "columns": [
+                { "width": "5%" },
+                null,
+                null,
+                null,
+                null
+            ]
         });
 
         var report_table_4 = $('#report-table-4').DataTable({
@@ -202,7 +191,9 @@
             buttons: [
                 {
                     extend: 'csv',
-                    title: 'Proofsheet Summary'
+                    title: 'Beneficiaries Rated',
+                    text: 'Download CSV',
+                    className: 'btn-success'
                 }
             ],
             columnDefs: [ 
@@ -211,15 +202,13 @@
                     targets:   4
                 }
             ],
-            // "columns": [
-            //     null,
-            //     { "width": "12%" },
-            //     null,
-            //     { "width": "5%" },
-            //     { "width": "8%" },
-            //     { "width": "13%" },
-            //     { "width": "8%" }
-            // ]
+            "columns": [
+                { "width": "5%" },
+                null,
+                null,
+                null,
+                null
+            ]
         });
 
         reports.fetch_reports();

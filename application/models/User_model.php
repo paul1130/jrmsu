@@ -106,14 +106,11 @@ class User_model extends MY_Model{
     }
 
 
-    public function update_user($user_id)
-    {
-        $data = array(
-            'asdf' => 1
-        );
-
-        $this->db->where('id', $user_id);
-
-        return $this->db->update(user_tbl, $data);
+    public function get_college() {
+        $this->db->select('distinct(department) as colleges')
+                ->from(course_tbl);
+        $query = $this->db->get();
+        
+        return $query->result_array();
     }
 }

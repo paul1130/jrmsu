@@ -19,7 +19,7 @@
         <div class="menu">
             <ul class="list">
                 <li id="menu-dashboard">
-                    <a href="<?= base_url('program') ?>">
+                    <a href="<?= base_url('dashboard') ?>">
                         <i class="material-icons">dashboard</i>
                         <span>Dashboard</span>
                     </a>

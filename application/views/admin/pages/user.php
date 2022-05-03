@@ -42,15 +42,15 @@
     document.addEventListener('DOMContentLoaded', function () {
 
     var users_table = $('#users-table').DataTable({
-        dom: 'Bfrtip',
+        dom: 'frtip',
         responsive: true,
         order: [[ 1, "asc" ]],
-        buttons: [
-            {
-                extend: 'csv',
-                title: 'Proofsheet Summary'
-            }
-        ],
+        // buttons: [
+        //     {
+        //         extend: 'csv',
+        //         title: 'Proofsheet Summary'
+        //     }
+        // ],
         columnDefs: [ 
             {
                 orderable: false,

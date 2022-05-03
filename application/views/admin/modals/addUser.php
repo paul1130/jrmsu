@@ -40,8 +40,21 @@
                                 <div class="form-line">
                                     <select class="form-select form-control" id="sel1" name="type">
                                         <option value='none' style='display: none'>User Type</option>
-                                        <?php foreach (user_type as $key => $value) {  echo $value; ?>
+                                        <?php foreach (user_type as $key => $value) {?>
                                             <option value="<?=$key?>"><?=$value?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <small style="color:red"></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <select class="form-select form-control" id="sel2" name="type">
+                                        <option value='none' style='display: none'>College</option>
+                                        <?php foreach ($colleges as $value) { ?>
+                                            <option value="<?=$value['colleges']?>"><?=$value['colleges']?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
