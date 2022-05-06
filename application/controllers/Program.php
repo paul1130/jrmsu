@@ -67,7 +67,9 @@ class Program extends MY_Controller{
     public function fetch_programs()
     {
         $result = array('status' => false);
-        $result["programs"] = $this->program_model->get_programs(); 
+        $result["programs"] = $this->session->userdata('user_data')['type'] == 'dean' ? 
+                            $this->program_model->get_programs_dean($this->session->userdata('user_data')['department']) : 
+                            $this->program_model->get_programs(); 
 
         foreach($result["programs"] as $key => $value) {
             $implementor = $this->program_model->get_implementor($value["id"]);

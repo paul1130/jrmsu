@@ -14,7 +14,7 @@
 class Dashboard extends MY_Controller{
     public function __construct() {
         parent::__construct();
-        $this->load->model('report_model');
+        $this->load->model('dashboard_model');
     }
     
     public function index()
@@ -57,6 +57,10 @@ class Dashboard extends MY_Controller{
                 'assets/vendors/js/pages/forms/advanced-form-elements.js',
                 'assets/vendors/js/Chart.min.js'
             );
+            $data['summary'] = $this->dashboard_model->get_summary();
+            $data['years'] = json_encode($this->dashboard_model->get_years());
+            $data['year_data'] = json_encode($this->dashboard_model->get_year_data());
+            $data['department'] = json_encode(department);
             
             $this->admin_page('dashboard', $data);
         }else{

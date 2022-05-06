@@ -101,3 +101,4 @@ define('user_tbl','user_tbl');
 // list of values
 define('user_type', array('admin' => 'Admin', 'dean' => 'Dean', 'secretary' => 'Secretary'));
 define('moa_status', array('approve' => 'Approve', 'proponents' => 'Proponents'));
+define('department', array('CED', 'CCS', 'CCJE', 'CBM', 'COA'));

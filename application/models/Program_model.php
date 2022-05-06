@@ -32,6 +32,26 @@ class Program_model extends MY_Model{
         return $query->result_array();
     }
 
+    public function get_programs_dean($department)
+    {
+        $query = $this->db->query('SELECT a.*, group_concat(acronym SEPARATOR ", ") as implementor
+                            FROM program_tbl a 
+                            inner join implementor_tbl b on a.id = b.program_id
+                            inner join course_tbl c on b.course_id = c.id
+                            where a.id in (
+                                SELECT program_tbl.id
+                                FROM `program_tbl` 
+                                inner join implementor_tbl on program_tbl.id = implementor_tbl.program_id
+                                inner join course_tbl on implementor_tbl.course_id = course_tbl.id
+                                where 
+                                    implementor_tbl.is_active = 1 and 
+                                    course_tbl.department = "'.$department.'"
+                            ) and b.is_active = 1 and a.is_deleted = 0
+                            group by a.id');
+
+        return $query->result_array();
+    }
+
     public function insert_program($data)
     {
         $this->db->insert(program_tbl, $data);
