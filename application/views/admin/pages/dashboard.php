@@ -71,9 +71,21 @@
                         Records Graph
                     </h2>
                 </div>
-                <div class="body table-responsive">
+                <div class="body">
                     <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
                         <canvas id="myChart" style="height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix card">
+                <div class="header">
+                    <h2>
+                        Accomplishments
+                    </h2>
+                </div>
+                <div class="body">
+                    <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+                        <canvas id="myPieChart" style="height: 400px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -236,6 +248,32 @@
                 }
                 
             },
+        }
+    });
+
+    const ctx2 = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(ctx2, {
+        "type": "pie",
+        "data": {
+            "labels": [
+                    "Red",
+                    "Blue",
+                    "Yellow"
+            ],
+            "datasets": [
+                {
+                    "label":"My First Dataset",
+                    "data":[300,50,100],
+                    "backgroundColor":[
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)",
+                        "rgb(255, 205, 86)"]
+                }
+            ]
+        },
+        "options": {
+            "responsive": true,
+            "maintainAspectRatio": false
         }
     });
 });
