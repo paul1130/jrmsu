@@ -81,8 +81,8 @@
                                     <div class="col-sm-12">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <select name="implementor[]" class="form-control implementor" placeholder="Implementing College" multiple>
-                                                    <option value='' style='display: none'></option>
+                                                <select name="implementor[]" class="form-control implementor" multiple>
+                                                    <option value='' style='display: none'>Implementing College</option>
                                                     <?php foreach ($courses as $course) {?>
                                                         <option value="<?=$course["id"]?>"><?=$course["acronym"]?></option>
                                                     <?php } ?>
@@ -110,7 +110,7 @@
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="form-group form-float">
                                             <div class="form-line">
                                                 <input type="text" name="numerical_rating" class="form-control" required="required">
@@ -119,7 +119,7 @@
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="form-group form-float">
                                             <div class="form-line">
                                                 <input type="text" name="descriptive_rating" class="form-control" required="required">
@@ -128,20 +128,28 @@
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" name="moa_status" class="form-control" required="required">
-                                                <label class="form-label">Moa Status</label>
+                                                <select name="moa_status" class="form-control" placeholder="Moa Status">
+                                                    <option value='' style='display: none'>Moa Status</option>
+                                                    <?php foreach (moa_status as $key => $value) {?>
+                                                        <option value="<?=$key?>"><?=$value?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                             <small style="color:red"></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-3">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" name="remarks" class="form-control" required="required">
-                                                <label class="form-label">Remarks</label>
+                                                <select name="remarks" class="form-control" placeholder="Moa Status">
+                                                    <option value='' style='display: none'>Remarks</option>
+                                                    <?php foreach (remarks as $key => $value) {?>
+                                                        <option value="<?=$key?>"><?=$value?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                             <small style="color:red"></small>
                                         </div>

@@ -248,9 +248,9 @@ var programs = {
                 }
 
                 if (data.error_moa_status != null) {
-                    $("#add-program-form input[name=moa_status]").closest(".form-group").find("small").html(data.error_moa_status);
+                    $("#add-program-form select[name=moa_status]").closest(".form-group").find("small").html(data.error_moa_status);
                 }else{
-                    $("#add-program-form input[name=moa_status]").closest(".form-group").find("small").html("");
+                    $("#add-program-form select[name=moa_status]").closest(".form-group").find("small").html("");
                 }
 
                 if (data.error_numerical_rating != null) {
@@ -266,9 +266,9 @@ var programs = {
                 }
 
                 if (data.error_remarks != null) {
-                    $("#add-program-form input[name=remarks]").closest(".form-group").find("small").html(data.error_remarks);
+                    $("#add-program-form select[name=remarks]").closest(".form-group").find("small").html(data.error_remarks);
                 }else{
-                    $("#add-program-form input[name=remarks]").closest(".form-group").find("small").html("");
+                    $("#add-program-form select[name=remarks]").closest(".form-group").find("small").html("");
                 }
 
                 if (data.error_started != null) {

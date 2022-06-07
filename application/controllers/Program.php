@@ -94,11 +94,11 @@ class Program extends MY_Controller{
     public function add_program()
     {
         $result = array('status' => false);
-        $this->form_validation->set_rules('title','Title','trim|required|alpha_numeric');
+        $this->form_validation->set_rules('title','Title','trim|required');
         $this->form_validation->set_rules('date','Program Date','trim|required');
-        $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required|alpha_numeric');
-        $this->form_validation->set_rules('remarks','Remarks','trim|required|alpha_numeric');
-        $this->form_validation->set_rules('moa_status', 'Moa Status', 'trim|required|alpha_numeric');
+        $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required');
+        $this->form_validation->set_rules('remarks','Remarks','trim|required');
+        $this->form_validation->set_rules('moa_status', 'Moa Status', 'trim|required');
         $this->form_validation->set_rules('implementor[]','Implementing College','callback_valid_implementor');
         $this->form_validation->set_rules('beneficiary','Number of Beneficiary','trim|required|integer');
         $this->form_validation->set_rules('trained', 'No. Of Persons Trained', 'trim|required|integer');
@@ -106,7 +106,7 @@ class Program extends MY_Controller{
         $this->form_validation->set_rules('started', 'Started', 'trim|required');
         $this->form_validation->set_rules('ended', 'Ended', 'trim|required');
         $this->form_validation->set_rules('numerical_rating', 'Numerical rating', 'trim|required|numeric');
-        $this->form_validation->set_rules('descriptive_rating', 'Descriptive rating', 'trim|required|alpha_numeric');
+        $this->form_validation->set_rules('descriptive_rating', 'Descriptive rating', 'trim|required');
         
         if ($this->form_validation->run() === FALSE){
             $result['error_title'] = form_error('title');
@@ -168,11 +168,11 @@ class Program extends MY_Controller{
     public function upload_file() { 
    
         $data = [];
-        $result = array('status' => false);
+        $result = array('status' => true);
      
         $count = count($_FILES['files']['name']);
-      
-        for($i=0;$i<$count;$i++){
+
+        for($i=0; $i<$count; $i++){
       
           if(!empty($_FILES['files']['name'][$i])){
       
@@ -208,7 +208,7 @@ class Program extends MY_Controller{
           }
      
         }
-        $result["error"] = $this->upload->display_errors();
+        $result["error"] = !empty($_FILES['files']['name'][0]) ? $this->upload->display_errors() : '';
         $result["status"] = $result["error"] == "" ? TRUE : $result["status"];
 
         echo json_encode($result);
@@ -336,11 +336,11 @@ class Program extends MY_Controller{
     public function update_program()
     {
         $result = array('status' => false);
-        $this->form_validation->set_rules('title','Title','trim|required|alpha_numeric');
+        $this->form_validation->set_rules('title','Title','trim|required');
         $this->form_validation->set_rules('date','Program Date','trim|required');
-        $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required|alpha_numeric');
-        $this->form_validation->set_rules('remarks','Remarks','trim|required|alpha_numeric');
-        $this->form_validation->set_rules('moa_status', 'Moa Status', 'trim|required|alpha_numeric');
+        $this->form_validation->set_rules('partner','Partner LGUs/NGAs/SMEs/Industries','trim|required');
+        $this->form_validation->set_rules('remarks','Remarks','trim|required');
+        $this->form_validation->set_rules('moa_status', 'Moa Status', 'trim|required');
         $this->form_validation->set_rules('implementor[]','Implementing College','callback_valid_implementor');
         $this->form_validation->set_rules('beneficiary','Number of Beneficiary','trim|required|integer');
         $this->form_validation->set_rules('trained', 'No. Of Persons Trained', 'trim|required|integer');
@@ -348,7 +348,7 @@ class Program extends MY_Controller{
         $this->form_validation->set_rules('started', 'Started', 'trim|required');
         $this->form_validation->set_rules('ended', 'Ended', 'trim|required');
         $this->form_validation->set_rules('numerical_rating', 'Numerical rating', 'trim|required|numeric');
-        $this->form_validation->set_rules('descriptive_rating', 'Descriptive rating', 'trim|required|alpha_numeric');
+        $this->form_validation->set_rules('descriptive_rating', 'Descriptive rating', 'trim|required');
         
         if ($this->form_validation->run() === FALSE){
             $result['error_title'] = form_error('title');
