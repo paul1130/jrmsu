@@ -44,5 +44,11 @@
 </body>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
+    $('#sign-in-form input[name=password]').keyup(function(event) {
+        if (event.which === 13)
+        {
+            user.validate_log_in();
+        }
+    });
 });
 </script>
