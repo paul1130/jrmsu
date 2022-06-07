@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                               Programs Table
+                               Extension Programs
                             </h2>
                         </div>
                         <div class="body table-responsive">
